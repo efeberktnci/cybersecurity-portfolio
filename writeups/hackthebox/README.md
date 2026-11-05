@@ -11,6 +11,7 @@ Writeups and learning notes for Hack The Box Academy modules and authorized Hack
 - [Intro to Academy](Intro_to_Academy/)
 - [Labs](Labs/)
   - [Starting Point](Labs/Starting_Point/)
+    - [Appointment](Labs/Starting_Point/Appointment/)
     - [Synced](Labs/Starting_Point/Synced/)
     - [Mongod](Labs/Starting_Point/Mongod/)
     - [Preignition](Labs/Starting_Point/Preignition/)
