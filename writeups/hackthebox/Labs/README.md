@@ -1,3 +1,5 @@
 # Hack The Box Labs
 
 - [Starting Point](Starting_Point/)
+  - [Tier 0 - Foundations](Starting_Point/Tier_0/)
+  - [Tier 1 - Fundamental Exploitation](Starting_Point/Tier_1/)
