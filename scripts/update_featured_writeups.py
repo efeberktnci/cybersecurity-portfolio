@@ -8,6 +8,10 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 LABS = ROOT / "writeups/hackthebox/Labs"
 STARTING_POINT = LABS / "Starting_Point"
+TIERS = {
+    "Tier_0": ("Tier 0 - Foundations", 0),
+    "Tier_1": ("Tier 1 - Fundamental Exploitation", 1),
+}
 README = ROOT / "README.md"
 
 
@@ -30,7 +34,7 @@ def added_order():
 def candidates(platform):
     base = ROOT / "writeups" / platform
     if platform == "hackthebox":
-        return list(STARTING_POINT.glob("*/README.md"))
+        return [p for tier in TIERS for p in (STARTING_POINT / tier).glob("*/README.md")]
     if platform == "letsdefend":
         return [p for p in base.rglob("README.md") if p.parent.name != "SOC_Fundamentals" and p.parent != base]
     return [
@@ -40,7 +44,7 @@ def candidates(platform):
 
 
 def title(path):
-    if path.parent.parent == STARTING_POINT:
+    if path.parent.parent in [STARTING_POINT / tier for tier in TIERS]:
         return path.parent.name
     match = re.search(r"^#\s+(.+)$", path.read_text(encoding="utf-8", errors="replace"), re.M)
     value = match.group(1).strip() if match else path.stem.replace("_", " ")
@@ -96,9 +100,13 @@ def main():
     labs = latest["Hack The Box"]
     index = ROOT / "writeups/hackthebox/README.md"
     content = index.read_text(encoding="utf-8")
-    replacement = "  - [Starting Point](Labs/Starting_Point/)\n" + "".join(
-        f"    - [{p.parent.name}](Labs/Starting_Point/{p.parent.name}/)\n" for p in labs
-    )
+    replacement = "  - [Starting Point](Labs/Starting_Point/)\n"
+    for tier, (label, _) in TIERS.items():
+        tier_paths = [p for p in labs if p.parent.parent.name == tier]
+        replacement += f"    - [{label}](Labs/Starting_Point/{tier}/)\n"
+        replacement += "".join(
+            f"      - [{p.parent.name}](Labs/Starting_Point/{tier}/{p.parent.name}/)\n" for p in tier_paths
+        )
     content, count = re.subn(
         r"(?<=- \[Labs\]\(Labs/\)\n)(?:  - \[[^\n]+\n|    - \[[^\n]+\n)*",
         lambda _: replacement, content, count=1,
@@ -110,6 +118,8 @@ def main():
     index = LABS / "README.md"
     content = index.read_text(encoding="utf-8")
     replacement = "- [Starting Point](Starting_Point/)\n"
+    for tier, (label, _) in TIERS.items():
+        replacement += f"  - [{label}](Starting_Point/{tier}/)\n"
     content, count = re.subn(
         r"(?<=# Hack The Box Labs\n\n)(?:- \[[^\n]+\n)*",
         lambda _: replacement, content, count=1,
@@ -120,9 +130,13 @@ def main():
 
     index = STARTING_POINT / "README.md"
     content = index.read_text(encoding="utf-8")
-    replacement = "".join(f"- [{p.parent.name}]({p.parent.name}/)\n" for p in labs)
+    replacement = ""
+    for tier, (label, _) in TIERS.items():
+        tier_paths = [p for p in labs if p.parent.parent.name == tier]
+        replacement += f"- [{label}]({tier}/)\n"
+        replacement += "".join(f"  - [{p.parent.name}]({tier}/{p.parent.name}/)\n" for p in tier_paths)
     content, count = re.subn(
-        r"(?<=# Hack The Box Starting Point\n\n)(?:- \[[^\n]+\n)*",
+        r"(?<=# Hack The Box Starting Point\n\n)(?:(?:- |  - )\[[^\n]+\n)*",
         lambda _: replacement, content, count=1,
     )
     if count != 1:
