@@ -11,3 +11,6 @@
   - [Meow](Tier_0/Meow/)
 - [Tier 1 - Fundamental Exploitation](Tier_1/)
   - [Appointment](Tier_1/Appointment/)
+  - [Sequel](Tier_1/Sequel/)
+
+
