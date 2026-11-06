@@ -36,15 +36,6 @@ USE htb;
 SHOW TABLES;
 ```
 
-The database contained `users` and `config` tables. I inspected both tables with:
-
-```sql
-SELECT * FROM users;
-SELECT * FROM config;
-```
-
-![Tables and rows](assets/04-tables-and-data.png)
-
 ## Selecting the flag row
 
 The `config` table contained a row whose `id` was 5. I selected only that row and its value:
