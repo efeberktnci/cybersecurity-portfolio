@@ -2,7 +2,7 @@
 
 # Writeups for TryHackMe
 
-![Track: Cybersecurity](https://img.shields.io/badge/Track-Cybersecurity-0B7285?style=for-the-badge) ![Focus: Cybersecurity Training](https://img.shields.io/badge/Focus-Cybersecurity%20Training-1C7ED6?style=for-the-badge) ![Section: Writeups](https://img.shields.io/badge/Section-Writeups-3B5BDB?style=for-the-badge) ![Last update](https://img.shields.io/badge/Last%20update-2026--11--06-495057?style=for-the-badge)
+![Track: Cybersecurity](https://img.shields.io/badge/Track-Cybersecurity-0B7285?style=for-the-badge) ![Focus: Cybersecurity Training](https://img.shields.io/badge/Focus-Cybersecurity%20Training-1C7ED6?style=for-the-badge) ![Section: Writeups](https://img.shields.io/badge/Section-Writeups-3B5BDB?style=for-the-badge) ![Last update](https://img.shields.io/badge/Last%20update-2026--11--06-2F9E44?style=for-the-badge)
 
 Welcome to my writeups for TryHackMe challenges, networks and walkthroughs.
 In addition, many modules and a few learning paths are included.
