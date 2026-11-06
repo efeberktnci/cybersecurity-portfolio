@@ -2,7 +2,7 @@
 
 # Writeups for TryHackMe
 
-![Track: AppSec](https://img.shields.io/badge/Track-AppSec-0B7285?style=for-the-badge) ![Focus: TryHackMe](https://img.shields.io/badge/Focus-TryHackMe-1C7ED6?style=for-the-badge) ![Section: Writeups](https://img.shields.io/badge/Section-Writeups-3B5BDB?style=for-the-badge) ![Last update](https://img.shields.io/badge/Last%20update-2026--05--16-495057?style=for-the-badge)
+![Track: Cybersecurity](https://img.shields.io/badge/Track-Cybersecurity-0B7285?style=for-the-badge) ![Focus: Cybersecurity Training](https://img.shields.io/badge/Focus-Cybersecurity%20Training-1C7ED6?style=for-the-badge) ![Section: Writeups](https://img.shields.io/badge/Section-Writeups-3B5BDB?style=for-the-badge) ![Last update](https://img.shields.io/badge/Last%20update-2026--05--16-495057?style=for-the-badge)
 
 Welcome to my writeups for TryHackMe challenges, networks and walkthroughs.
 In addition, many modules and a few learning paths are included.
@@ -18,3 +18,4 @@ This repository is a work in progress and will grow over time as I complete more
 
 ## Support
 If you find this repository helpful, consider starring it so I can keep it maintained and easy to navigate.
+

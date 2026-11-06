@@ -1,6 +1,6 @@
 # Cybersecurity Learning Portfolio
 
-![Track: AppSec](https://img.shields.io/badge/Track-AppSec-0B7285?style=for-the-badge)
+![Track: Cybersecurity](https://img.shields.io/badge/Track-Cybersecurity-0B7285?style=for-the-badge)
 ![Focus: Security Labs](https://img.shields.io/badge/Focus-Security%20Labs-1C7ED6?style=for-the-badge)
 ![Status: Active](https://img.shields.io/badge/Status-Active-2F9E44?style=for-the-badge)
 ![Last update](https://img.shields.io/badge/Last%20update-2026--10--23-495057?style=for-the-badge)
@@ -49,3 +49,4 @@ This section is intentionally short and scannable. Each platform has its own ind
 
 ## Legal / Ethics
 This repository is for labs and authorized targets only. No testing of real systems without explicit permission.
+

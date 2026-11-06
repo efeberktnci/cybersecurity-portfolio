@@ -2,7 +2,7 @@
 
 # Writeups for Hack The Box
 
-![Track: AppSec](https://img.shields.io/badge/Track-AppSec-0B7285?style=for-the-badge) ![Focus: Hack%20The%20Box](https://img.shields.io/badge/Focus-Hack%20The%20Box-9FEF00?style=for-the-badge) ![Section: Writeups](https://img.shields.io/badge/Section-Writeups-3B5BDB?style=for-the-badge) ![Status: In progress](https://img.shields.io/badge/Status-In%20progress-F59F00?style=for-the-badge)
+![Track: Cybersecurity](https://img.shields.io/badge/Track-Cybersecurity-0B7285?style=for-the-badge) ![Focus: Offensive Security](https://img.shields.io/badge/Focus-Offensive%20Security-9FEF00?style=for-the-badge) ![Section: Writeups](https://img.shields.io/badge/Section-Writeups-3B5BDB?style=for-the-badge) ![Status: In progress](https://img.shields.io/badge/Status-In%20progress-F59F00?style=for-the-badge)
 
 Writeups and learning notes for Hack The Box Academy modules and authorized Hack The Box labs.
 
@@ -27,3 +27,4 @@ Writeups and learning notes for Hack The Box Academy modules and authorized Hack
 ## Scope
 
 All work documented here is limited to Hack The Box Academy content and other explicitly authorized Hack The Box environments.
+
