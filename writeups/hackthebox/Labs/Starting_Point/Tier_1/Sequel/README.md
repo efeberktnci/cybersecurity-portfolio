@@ -68,3 +68,4 @@ HELP USE;
 
 This displayed the `USE db_name` syntax. `HELP CONTENTS;` can be used to browse server-side SQL help topics, while `HELP;` lists client commands.
 
+
