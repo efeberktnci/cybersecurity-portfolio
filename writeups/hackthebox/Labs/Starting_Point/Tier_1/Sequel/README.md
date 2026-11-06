@@ -58,15 +58,3 @@ SELECT value FROM config WHERE id = 5;
 
 I submitted the displayed value to complete the lab. The flag value is intentionally not transcribed here.
 
-## Help discovery
-
-When I needed the syntax for selecting a database, I used MariaDB's built-in help:
-
-```sql
-HELP USE;
-```
-
-This displayed the `USE db_name` syntax. `HELP CONTENTS;` can be used to browse server-side SQL help topics, while `HELP;` lists client commands.
-
-
-
