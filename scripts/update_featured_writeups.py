@@ -108,7 +108,7 @@ def main():
             f"      - [{p.parent.name}](Labs/Starting_Point/{tier}/{p.parent.name}/)\n" for p in tier_paths
         )
     content, count = re.subn(
-        r"(?<=- \[Labs\]\(Labs/\)\n)(?:  - \[[^\n]+\n|    - \[[^\n]+\n)*",
+        r"(?<=- \[Labs\]\(Labs/\)\n)(?:(?: {2,})- \[[^\n]+\n)*",
         lambda _: replacement, content, count=1,
     )
     if count != 1:
@@ -136,7 +136,7 @@ def main():
         replacement += f"- [{label}]({tier}/)\n"
         replacement += "".join(f"  - [{p.parent.name}]({tier}/{p.parent.name}/)\n" for p in tier_paths)
     content, count = re.subn(
-        r"(?<=# Hack The Box Starting Point\n\n)(?:(?:- |  - )\[[^\n]+\n)*",
+        r"(?<=# Hack The Box Starting Point\n\n)(?:(?: {0,})- \[[^\n]+\n)*",
         lambda _: replacement, content, count=1,
     )
     if count != 1:
