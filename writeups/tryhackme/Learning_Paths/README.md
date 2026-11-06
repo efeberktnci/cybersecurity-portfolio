@@ -1,4 +1,4 @@
-![Last update](https://img.shields.io/badge/Last%20update-2026--10--22-495057?style=for-the-badge)
+![Last update](https://img.shields.io/badge/Last%20update-2026--11--06-495057?style=for-the-badge)
 
 # Learning Paths
 

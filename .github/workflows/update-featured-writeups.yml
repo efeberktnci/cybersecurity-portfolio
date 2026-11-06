@@ -6,6 +6,7 @@ on:
     paths:
       - 'writeups/**/*.md'
       - 'scripts/update_featured_writeups.py'
+      - 'scripts/update-last-update.ps1'
       - '.github/workflows/update-featured-writeups.yml'
   workflow_dispatch:
 
@@ -22,6 +23,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Refresh last-update badges
+        shell: pwsh
+        run: ./scripts/update-last-update.ps1
       - name: Refresh featured write-ups
         run: python scripts/update_featured_writeups.py
       - name: Commit changed indexes

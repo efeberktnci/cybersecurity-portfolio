@@ -9,4 +9,4 @@ This folder contains my Cross-Site Request Forgery (`CSRF`) write-ups from PortS
 ## Labs
 
 - Lab — CSRF vulnerability with no defenses (change email): [01-lab-csrf-change-email-no-token.md](01-lab-csrf-change-email-no-token.md)
-![Last update](https://img.shields.io/badge/Last%20update-2026--05--16-495057?style=for-the-badge)
+![Last update](https://img.shields.io/badge/Last%20update-2026--11--06-495057?style=for-the-badge)

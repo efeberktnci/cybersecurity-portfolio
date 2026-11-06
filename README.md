@@ -3,7 +3,7 @@
 ![Track: Cybersecurity](https://img.shields.io/badge/Track-Cybersecurity-0B7285?style=for-the-badge)
 ![Focus: Security Labs](https://img.shields.io/badge/Focus-Security%20Labs-1C7ED6?style=for-the-badge)
 ![Status: Active](https://img.shields.io/badge/Status-Active-2F9E44?style=for-the-badge)
-![Last update](https://img.shields.io/badge/Last%20update-2026--10--23-495057?style=for-the-badge)
+![Last update](https://img.shields.io/badge/Last%20update-2026--11--06-495057?style=for-the-badge)
 
 This repository documents my hands-on cybersecurity learning: guided lab write-ups, pentest-style findings, SOC training notes, and Secure SDLC artifacts.
 
