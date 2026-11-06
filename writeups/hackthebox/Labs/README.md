@@ -13,3 +13,5 @@
   - [Tier 1 - Fundamental Exploitation](Starting_Point/Tier_1/)
   - [Tier 0 - Foundations](Starting_Point/Tier_0/)
   - [Tier 1 - Fundamental Exploitation](Starting_Point/Tier_1/)
+  - [Tier 0 - Foundations](Starting_Point/Tier_0/)
+  - [Tier 1 - Fundamental Exploitation](Starting_Point/Tier_1/)
