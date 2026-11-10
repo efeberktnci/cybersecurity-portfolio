@@ -16,7 +16,11 @@ The objective was to identify the exposed services, inspect the information avai
 
 This write-up documents activity performed against the authorized Hack The Box Starting Point target. Target addresses, credentials, recovered passwords, and the flag are intentionally omitted.
 
-![Crocodile completion proof](assets/01-completion-proof.png)
+![FTP files and service enumeration](assets/01-ftp-files-and-nmap.png)
+
+![Web login, flag page, and Gobuster results](assets/02-web-login-and-gobuster.png)
+
+![Crocodile completion proof](assets/03-completion-proof.png)
 
 ## Investigation process
 
