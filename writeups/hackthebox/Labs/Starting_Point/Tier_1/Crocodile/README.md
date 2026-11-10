@@ -78,15 +78,11 @@ The scan returned several paths, including `login.php`, `logout.php`, `config.ph
 
 Gobuster's results also showed why response codes need context: redirects marked directory paths, denied responses indicated restricted resources, and a successful response with no body did not prove that a useful file was exposed.
 
+### 4. Logging in and completing the lab
+
+After finding `login.php`, I compared the usernames in `allowed.userlist` with the corresponding passwords in `allowed.userlist.passwd`. The lists included an `admin` account. I used that account and its matching password to log in through the web page. The authenticated page displayed the flag, which I submitted to complete Crocodile.
+
 ![Gobuster results and authenticated web page](assets/02-web-login-and-gobuster.png)
-
-### 4. Correlating the findings
-
-The FTP files and the web login page were related findings. I used the information recovered through the authorized anonymous FTP session with the login interface identified during web enumeration. The login succeeded, confirming that the exposed FTP data was relevant to the web application.
-
-### 5. Completion
-
-After authentication, the application displayed the completion flag. I submitted it to Hack The Box, and the Crocodile machine was marked as solved.
 
 ## Technical analysis
 
