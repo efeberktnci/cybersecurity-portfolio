@@ -4,6 +4,10 @@
 
 Lab link: [Crocodile](https://app.hackthebox.com/starting-point)
 
+## Completion proof
+
+![Crocodile completion proof](assets/03-completion-proof.png)
+
 ## Overview
 
 Crocodile is a Very Easy Hack The Box Starting Point machine focused on connecting FTP and web enumeration findings. The investigation involved anonymous FTP access, local file retrieval, and discovery of a web login page.
@@ -16,12 +20,6 @@ The objective was to identify the exposed services, inspect the information avai
 
 This write-up documents activity performed against the authorized Hack The Box Starting Point target. Target addresses, credentials, recovered passwords, and the flag are intentionally omitted.
 
-![FTP files and service enumeration](assets/01-ftp-files-and-nmap.png)
-
-![Web login, flag page, and Gobuster results](assets/02-web-login-and-gobuster.png)
-
-![Crocodile completion proof](assets/03-completion-proof.png)
-
 ## Investigation process
 
 ### 1. Service enumeration
@@ -33,6 +31,8 @@ nmap -Pn -sV -sC -p- <target-ip>
 ```
 
 The scan identified FTP on TCP port 21 and HTTP on TCP port 80. FTP reported `vsftpd 3.0.3`, and the web service identified itself as Apache HTTP Server. The scan also indicated that anonymous FTP login was allowed, so FTP was the first service to investigate.
+
+![Service scan and retrieved FTP files](assets/01-ftp-files-and-nmap.png)
 
 ### 2. Anonymous FTP access
 
@@ -77,6 +77,8 @@ gobuster dir -u http://<target-ip> \
 The scan returned several paths, including `login.php`, `logout.php`, `config.php`, `dashboard/`, `assets/`, `css/`, `fonts/`, and `js/`. The important discovery was `login.php`, which provided the web authentication interface.
 
 Gobuster's results also showed why response codes need context: redirects marked directory paths, denied responses indicated restricted resources, and a successful response with no body did not prove that a useful file was exposed.
+
+![Gobuster results and authenticated web page](assets/02-web-login-and-gobuster.png)
 
 ### 4. Correlating the findings
 
