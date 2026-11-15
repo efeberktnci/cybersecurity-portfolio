@@ -4,10 +4,6 @@
 
 Lab link: [Responder](https://app.hackthebox.com/starting-point)
 
-## Completion proof
-
-![Hack The Box Responder completion proof](assets/01-completion-proof.png)
-
 ## Reconnaissance
 
 I scanned all TCP ports to identify the services exposed by the active lab target:
@@ -141,3 +137,5 @@ Responder did not recover the plaintext password directly. It captured the chall
 ## Result
 
 The Responder challenge objective was completed successfully. The completion proof and screenshots document the scan, web investigation, authentication capture, password recovery, and flag retrieval.
+
+![Hack The Box Responder completion proof](assets/01-completion-proof.png)
