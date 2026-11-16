@@ -23,6 +23,7 @@ Writeups and learning notes for Hack The Box Academy modules and authorized Hack
     - [Tier 1 - Fundamental Exploitation](Labs/Starting_Point/Tier_1/)
       - [Responder](Labs/Starting_Point/Tier_1/Responder/)
       - [Crocodile](Labs/Starting_Point/Tier_1/Crocodile/)
+      - [Three](Labs/Starting_Point/Tier_1/Three/)
       - [Sequel](Labs/Starting_Point/Tier_1/Sequel/)
       - [Appointment](Labs/Starting_Point/Tier_1/Appointment/)
 
