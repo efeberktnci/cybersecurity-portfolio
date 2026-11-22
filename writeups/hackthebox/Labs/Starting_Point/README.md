@@ -13,7 +13,6 @@
   - [Appointment](Tier_1/Appointment/)
   - [Crocodile](Tier_1/Crocodile/)
   - [Funnel](Tier_1/Funnel/)
-  - [Bike](Tier_1/Bike/)
   - [Responder](Tier_1/Responder/)
   - [Sequel](Tier_1/Sequel/)
   - [Three](Tier_1/Three/)
