@@ -10,11 +10,6 @@ Writeups and learning notes for Hack The Box Academy modules and authorized Hack
 
 - [Intro to Academy](Intro_to_Academy/)
 - [Labs](Labs/)
-  - [Machines](Labs/Machines/)
-    - [Easy](Labs/Machines/Easy/)
-    - [Medium](Labs/Machines/Medium/)
-    - [Hard](Labs/Machines/Hard/)
-    - [Insane](Labs/Machines/Insane/)
   - [Starting Point](Labs/Starting_Point/)
     - [Tier 0 - Foundations](Labs/Starting_Point/Tier_0/)
       - [Synced](Labs/Starting_Point/Tier_0/Synced/)
