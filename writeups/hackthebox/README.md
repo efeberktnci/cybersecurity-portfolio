@@ -22,6 +22,7 @@ Writeups and learning notes for Hack The Box Academy modules and authorized Hack
       - [Meow](Labs/Starting_Point/Tier_0/Meow/)
     - [Tier 1 - Fundamental Exploitation](Labs/Starting_Point/Tier_1/)
       - [Funnel](Labs/Starting_Point/Tier_1/Funnel/)
+      - [Bike](Labs/Starting_Point/Tier_1/Bike/)
       - [Three](Labs/Starting_Point/Tier_1/Three/)
       - [Responder](Labs/Starting_Point/Tier_1/Responder/)
       - [Crocodile](Labs/Starting_Point/Tier_1/Crocodile/)
