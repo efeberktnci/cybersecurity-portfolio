@@ -36,15 +36,7 @@ The raw Handlebars payload contains braces, spaces, quotes, parentheses, and lin
 
 This screenshot documents the first encoding step: the raw payload is entered into the encoder and the `%7B`, `%20`, and similar sequences are produced for the HTTP request.
 
-### 5. Encode the command-specific variant
-
-After identifying the Node.js execution path, I prepared the same Handlebars structure with the `whoami` command and encoded that variant as well. Keeping the template structure unchanged while changing only the command makes the test reproducible and isolates the effect of each request.
-
-![URL-encoded whoami variant](assets/05-whoami-encoding.png)
-
-The encoded output was copied into Burp Repeater between `email=` and `&action=Submit`.
-
-### 6. Test SSTI in Burp Repeater
+### 5. Test SSTI in Burp Repeater
 The form POST was captured in Burp Suite and sent to Repeater. The first constructor payload attempted `require('child_process')`; the response showed:
 
 ```text
@@ -53,7 +45,15 @@ ReferenceError: require is not defined
 
 This established that `require` was not directly available in the template context.
 
-![require is not defined](assets/06-require-error.png)
+![require is not defined](assets/05-require-error.png)
+
+### 6. Encode the command-specific variant
+
+After the `require` error showed that the direct loader was unavailable, I prepared the same Handlebars structure with the `whoami` command and encoded that variant. Only the command changed; keeping the template structure fixed made the next test reproducible.
+
+![URL-encoded whoami variant](assets/06-whoami-encoding.png)
+
+The encoded output was copied into Burp Repeater between `email=` and `&action=Submit`.
 
 ### 7. Reach the Node.js global scope
 The payload was changed to:
