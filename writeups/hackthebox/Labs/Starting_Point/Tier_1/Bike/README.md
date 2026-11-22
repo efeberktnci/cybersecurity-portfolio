@@ -28,7 +28,23 @@ Submitting `{{7*7}}` to the email form produced a parser error containing the Ha
 
 ![Handlebars parser error](assets/03-handlebars-error.png)
 
-### 4. Test SSTI in Burp Repeater
+### 4. Encode the Handlebars payload
+
+The raw Handlebars payload contains braces, spaces, quotes, parentheses, and line breaks that must be transported safely in the form body. I URL-encoded the payload before inserting it into the `email` parameter. This is transport encoding, not encryption: the server decodes it back to the original payload.
+
+![URL-encoded Handlebars payload](assets/04-payload-encoding.png)
+
+This screenshot documents the first encoding step: the raw payload is entered into the encoder and the `%7B`, `%20`, and similar sequences are produced for the HTTP request.
+
+### 5. Encode the command-specific variant
+
+After identifying the Node.js execution path, I prepared the same Handlebars structure with the `whoami` command and encoded that variant as well. Keeping the template structure unchanged while changing only the command makes the test reproducible and isolates the effect of each request.
+
+![URL-encoded whoami variant](assets/05-whoami-encoding.png)
+
+The encoded output was copied into Burp Repeater between `email=` and `&action=Submit`.
+
+### 6. Test SSTI in Burp Repeater
 The form POST was captured in Burp Suite and sent to Repeater. The first constructor payload attempted `require('child_process')`; the response showed:
 
 ```text
@@ -37,9 +53,9 @@ ReferenceError: require is not defined
 
 This established that `require` was not directly available in the template context.
 
-![require is not defined](assets/04-require-error.png)
+![require is not defined](assets/06-require-error.png)
 
-### 5. Reach the Node.js global scope
+### 7. Reach the Node.js global scope
 The payload was changed to:
 
 ```javascript
@@ -48,14 +64,14 @@ global.process.mainModule.require('child_process').execSync('whoami').toString()
 
 The response returned `root`, proving command execution as the web-server account.
 
-![whoami returned root](assets/05-whoami-root.png)
+![whoami returned root](assets/07-whoami-root.png)
 
-### 6. Locate and read the flag
+### 8. Locate and read the flag
 Using the same SSTI primitive, `execSync('ls -la /root').toString()` revealed `/root/flag.txt`. A final `cat /root/flag.txt` request retrieved the flag, which was submitted to HTB and redacted here.
 
-![Root directory listing](assets/06-root-listing.png)
+![Root directory listing](assets/08-root-listing.png)
 
-![Redacted flag response](assets/07-redacted-flag.png)
+![Redacted flag response](assets/09-redacted-flag.png)
 
 ## Technical analysis
 
